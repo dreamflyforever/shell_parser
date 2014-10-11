@@ -13,5 +13,5 @@ void list_insert(LIST *head, LIST *node)
 
 int is_list_empty(LIST *node)
 {
-    return node->next == NULL;
+    return node->next == NULL? 1: 0;
 }

@@ -3,7 +3,10 @@
 
 #define U8   unsigned char
 #define U32  unsigned int
+
+#ifndef NULL
 #define NULL (void *)0
+#endif
 
 enum BOOL{
     FALSE = 0,

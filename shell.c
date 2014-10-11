@@ -10,8 +10,10 @@
 
 #include "shell.h"
 
-/*The buff for input commad*/
+/*The buff for input command*/
 U8 buff_cmd[128];
+
+U8 history[10][100];
 
 SYMBOL sym_head;
 
@@ -34,7 +36,7 @@ void export(FUNC_PTR func, U8 *name)
     symbol_list_insert(token(func));  
 }
 
-int parser()
+int parser(U8 *cmd)
 {
     SYMBOL *sym_tmp;
     LIST *tmp = &sym_head.list;
@@ -42,11 +44,44 @@ int parser()
     for (; !is_list_empty(tmp); tmp = tmp->next)
     { 
         sym_tmp = list_entry(tmp->next, SYMBOL, list);
-        if (!strcmp(buff_cmd, sym_tmp->name))
+        if (!strcmp(cmd, sym_tmp->name))
         {
             sym_tmp->func(NULL);
             return TURE;
         }
     }
     return FALSE;
+}
+
+int judge_key_up_or_down(U8 key)
+{
+    initscr();
+    keypad(stdscr,true);
+    
+    while (key){
+        
+        switch (key){
+        
+            case DOWN_KEY:
+                deleteln();
+                //printw("%s",  history[i]);
+                break;
+        
+            case UP_KEY:
+                deleteln();
+                //printw("%s", history[i]);
+                break;
+        
+            case RIGHT_KEY:
+                break;
+        
+            case LEFT_KEY: 
+                break;
+            
+            default: 
+                break;
+        }
+    }
+    endwin();
+    return 1; 
 }
